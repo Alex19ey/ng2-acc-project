@@ -1,0 +1,32 @@
+<div class="container-fluid">
+    <div class="col-xs-4 col-md-3">
+        <input placeholder="Filter by Account name"
+               [ngTableFiltering]="tableConfig.filtering"
+               class="form-control"
+               (tableChanged)="onChangeTable($event)"/>
+    </div>
+
+    <button class="btn bg-primary" [routerLink]="['/accounts/create']">Create</button>
+
+    <ng-table class="col-xs-12 my-table"
+              [config]="tableConfig"
+              (tableChanged)="onChangeTable($event)"
+              (cellClicked)="onCellClick($event)"
+              [rows]="rows"
+              [columns]="columns">
+    </ng-table>
+
+    <div *ngIf="!rows.length" class="col-xs-12 text-center">No results</div>
+
+    <div [hidden]="pagination.totalItems <= pagination.limit" class="col-xs-12 text-center">
+        <pagination class="pagination-sm"
+                    [(ngModel)]="pagination.page"
+                    [totalItems]="pagination.totalItems"
+                    [itemsPerPage]="pagination.limit"
+                    [maxSize]="pagination.maxSize"
+                    [boundaryLinks]="true"
+                    [rotate]="false"
+                    (pageChanged)="onChangePage($event)">
+        </pagination>
+    </div>
+</div>

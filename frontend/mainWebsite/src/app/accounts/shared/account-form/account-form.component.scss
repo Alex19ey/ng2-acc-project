@@ -1,0 +1,25 @@
+form {
+  border-radius: 20px;
+  border: 1px solid black;
+  padding: 40px 50px;
+
+  .alert {
+    padding: 2px 8px;
+    margin-bottom: 0;
+  }
+
+  .btn[type="submit"] {
+    padding: 10px 45px;
+  }
+}
+
+input.ng-dirty.ng-invalid {
+  border-left: 4px solid darkred;
+}
+input.ng-dirty.ng-valid {
+  border-left: 4px solid green;
+}
+.submitted .ng-invalid {
+  border-left: 4px solid darkred;
+}
+

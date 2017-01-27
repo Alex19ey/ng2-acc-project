@@ -1,0 +1,124 @@
+<form class="form-horizontal"
+      [class.submitted]="submitted"
+      [formGroup]="accountForm"
+      (ngSubmit)="onSubmit()"
+      novalidate>
+
+    <!-- Account Name -->
+    <div class="form-group">
+        <label for="accountName"
+               class="col-sm-3 control-label">Account Name</label>
+        <div class="col-sm-9">
+            <input type="text"
+                   id="accountName"
+                   placeholder="Account Name.."
+                   class="form-control"
+                   formControlName="accountName"
+                   required
+                   autofocus>
+            <div *ngIf="formErrors.accountName"
+                 class="alert alert-danger">{{ formErrors.accountName }}</div>
+        </div>
+    </div>
+
+    <!-- Address -->
+    <div class="form-group">
+        <label for="address"
+               class="col-sm-3 control-label">Address</label>
+        <div class="col-sm-9">
+            <input type="text"
+                   id="address"
+                   placeholder="Address.."
+                   class="form-control"
+                   formControlName="address"
+                   required>
+            <div *ngIf="formErrors.address"
+                 class="alert alert-danger">{{ formErrors.address }}</div>
+        </div>
+    </div>
+
+    <!-- Phone -->
+    <div class="form-group">
+        <label for="phone"
+               class="col-sm-3 control-label">Phone</label>
+        <div class="col-sm-9">
+            <input type="text"
+                   id="phone"
+                   placeholder="Phone.."
+                   class="form-control"
+                   formControlName="phone"
+                   required>
+            <span class="help-block">Please use similar format: 000-000-0000</span>
+            <div *ngIf="formErrors.phone"
+                 class="alert alert-danger">{{ formErrors.phone }}</div>
+        </div>
+    </div>
+
+    <!-- Fax -->
+    <div class="form-group">
+        <label for="fax"
+               class="col-sm-3 control-label">Fax</label>
+        <div class="col-sm-9">
+            <input type="text"
+                   id="fax"
+                   placeholder="Fax.."
+                   class="form-control"
+                   formControlName="fax"
+                   required>
+            <span class="help-block">Please use similar format: 000-000-0000</span>
+            <div *ngIf="formErrors.fax"
+                 class="alert alert-danger">{{ formErrors.fax }}</div>
+        </div>
+    </div>
+
+    <!-- City -->
+    <div class="form-group">
+        <label for="city"
+               class="col-sm-3 control-label">City</label>
+        <div class="col-sm-9">
+            <input type="text"
+                   id="city"
+                   placeholder="City.."
+                   class="form-control"
+                   formControlName="city"
+                   required>
+            <div *ngIf="formErrors.city"
+                 class="alert alert-danger">{{ formErrors.city }}</div>
+        </div>
+    </div>
+
+    <!-- Info -->
+    <div class="form-group">
+        <label for="info"
+               class="col-sm-3 control-label">Info</label>
+        <div class="col-sm-9">
+            <input type="text"
+                   id="info"
+                   placeholder="Info.."
+                   class="form-control"
+                   formControlName="info"
+                   required>
+            <div *ngIf="formErrors.info"
+                 class="alert alert-danger">{{ formErrors.info }}</div>
+        </div>
+    </div>
+
+    <!-- Contact Name -->
+    <div class="form-group">
+        <label for="contactName"
+               class="col-sm-3 control-label">Contact Name</label>
+        <div class="col-sm-9">
+            <input type="text"
+                   id="contactName"
+                   placeholder="Contact Name.."
+                   class="form-control"
+                   formControlName="contactName"
+                   required>
+            <div *ngIf="formErrors.contactName"
+                 class="alert alert-danger">{{ formErrors.contactName }}</div>
+        </div>
+    </div>
+
+    <button *ngIf="formType === 'update'" type="submit" class="btn btn-primary center-block">Update</button>
+    <button *ngIf="formType === 'create'" type="submit" class="btn btn-primary center-block">Create</button>
+</form>

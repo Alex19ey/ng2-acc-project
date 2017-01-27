@@ -1,0 +1,33 @@
+{
+  "name": "Angular2TestApp",
+  "version": "0.0.1",
+  "main": "app.js",
+  "scripts": {
+    "start": "npm run server:dev",
+    "install:all": "npm i && cd ./frontend/mainWebsite && npm i",
+    "build:prod": "cd ./frontend/mainWebsite && npm run prod:aot",
+    "dev:w": "cd ./frontend/mainWebsite && npm run dev:w",
+    "outdated": "npm outdated -l",
+    "server:prod": "NODE_ENV=production node app.js",
+    "server:dev": "node app.js"
+  },
+  "dependencies": {
+    "async": "~2.1.4",
+    "body-parser": "~1.16.0",
+    "compression": "~1.6.2",
+    "concurrently": "~3.1.0",
+    "connect-multiparty": "~2.0.0",
+    "cors": "~2.8.1",
+    "ejs": "~2.5.5",
+    "express": "~4.14.0",
+    "lodash": "~4.17.4",
+    "lowdb": "~0.14.0",
+    "request": "~2.79.0",
+    "revalidator": "~0.3.1"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": ">= 6.0.0",
+    "npm": ">= 3"
+  }
+}
