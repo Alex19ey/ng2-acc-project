@@ -47,7 +47,7 @@ export class AccountService {
             .map(res => res.json() as Account);
     }
 
-    remove(id: number): Observable<null> {
+    remove(id: number): Observable<string> {
         const url = `${this.accountsUrl}/${id}`;
         return this.http
             .delete(url, {headers: this.headers})

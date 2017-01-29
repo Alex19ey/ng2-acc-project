@@ -1,6 +1,6 @@
 {
   "name": "angular2-app",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Test App",
   "scripts": {
     "dev:w": "npm run rimraf -- dist && webpack",

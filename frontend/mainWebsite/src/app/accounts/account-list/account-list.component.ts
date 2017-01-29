@@ -36,8 +36,8 @@ export class AccountListComponent implements OnInit, OnDestroy {
         filtering: { filterString: ''},
         className: ['table-striped', 'table-hover']
     };
-    filterName$ = new Subject<string>();
-    updateTable$ = new Subject<void>();
+    filterName$: Subject<string> = new Subject<string>();
+    updateTable$: Subject<null> = new Subject<null>();
     pagination: CustomPaginationConfig;
 
     constructor(
@@ -52,19 +52,21 @@ export class AccountListComponent implements OnInit, OnDestroy {
         this.updateTable$.next();
     }
 
-    onCellClick(data: any): any {
-        if (data.column === 'view') return this.router.navigate([`/accounts`, data.row.id]);
-        if (data.column === 'remove') {
+    onCellClick(data: any): void {
+        if (data.column === 'view') {
+            this.router.navigate([`/accounts`, data.row.id]);
+        }
+        else if (data.column === 'remove') {
             this.accountService.remove(data.row.id)
                 .subscribe(
-                    res => this.updateTable$.next(),
+                    () => {this.updateTable$.next()},
                     err => console.log(err)
                 );
         }
     }
 
-    onChangePage(event): void {
-        this.pagination.page = event.page;
+    onChangePage(page: number): void {
+        this.pagination.page = page;
         this.updateTable$.next();
     }
 
@@ -81,10 +83,13 @@ export class AccountListComponent implements OnInit, OnDestroy {
         this.updateTable$
             .switchMap(() => this.getAllAccounts())
             .takeWhile(() => this.alive)
-            .subscribe(res => {
-                this.pagination.totalItems = res.count;
-                this.generateRows(res.data);
-            }, err => console.log(err));
+            .subscribe(
+                res => {
+                    this.pagination.totalItems = res.count;
+                    this.generateRows(res.data);
+                },
+                err => console.log(err)
+            );
 
         this.filterName$
             .debounceTime(300)
@@ -112,18 +117,16 @@ export class AccountListComponent implements OnInit, OnDestroy {
 
     // this is sort of hack, ng2-table cant create btns in a row
     private generateRows(accounts: Account[]): void {
-        this.rows = accounts;
-        this.rows.filter((item, i, arr) => {
+        let rows: any = accounts;
+        rows.filter((item, i, arr) => {
             item.view = '<button class="btn btn-info">View</button>';
             item.remove = '<button class="btn btn-danger">Delete</button>';
         });
+
+        this.rows = rows;
     }
 
     private getAllAccounts(): Observable<AccountsWithCount> {
-        return this.accountService.getAll(this.searchParams());
-    }
-
-    private searchParams(): URLSearchParams {
         let params = new URLSearchParams();
         let sortItem = this.tableConfig.sorting.columns.find(item => item.sort);
         if (sortItem) {
@@ -134,6 +137,6 @@ export class AccountListComponent implements OnInit, OnDestroy {
         params.set('limit', this.pagination.limit.toString());
         params.set('offset', this.pagination.countOffset().toString());
 
-        return params;
+        return this.accountService.getAll(params);
     }
 }
