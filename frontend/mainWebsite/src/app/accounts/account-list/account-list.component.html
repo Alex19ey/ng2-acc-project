@@ -1,9 +1,8 @@
 <div class="container-fluid">
     <div class="col-xs-4 col-md-3">
         <input placeholder="Filter by Account name"
-               [ngTableFiltering]="tableConfig.filtering"
                class="form-control"
-               (tableChanged)="onChangeTable($event)"/>
+               (input)="onFilterTable($event.target.value)"/>
     </div>
 
     <button class="btn bg-primary" [routerLink]="['/accounts/create']">Create</button>

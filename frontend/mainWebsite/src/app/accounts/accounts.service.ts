@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, URLSearchParams } from '@angular/http';
+import { Http, Headers, URLSearchParams, Response } from '@angular/http';
 
-import { Account } from './account.model';
+import { Account } from './shared/account.model';
+import {Observable} from "rxjs";
 
 
 
@@ -22,17 +23,15 @@ export class AccountService {
             .catch(this.errorHandler);
     }
 
-    getAll(params: URLSearchParams): Promise<{ data: Account[], count: number }> {
+    getAll(params: URLSearchParams): Observable<AccountsWithCount> {
         return this.http
             .get(this.accountsUrl, { search: params })
-            .toPromise()
-            .then(response => {
+            .map(res => {
                 return {
-                    data: response.json() as Account[],
-                    count: +response.headers.get('X-Count')
+                    data: res.json() as Account[],
+                    count: +res.headers.get('X-Count')
                 }
-            })
-            .catch(this.errorHandler);
+            });
     }
 
     create(account: Account): Promise<Account> {
@@ -52,17 +51,20 @@ export class AccountService {
             .catch(this.errorHandler);
     }
 
-    remove(id: number): Promise<void> {
+    remove(id: number): Observable<null> {
         const url = `${this.accountsUrl}/${id}`;
         return this.http
             .delete(url, {headers: this.headers})
-            .toPromise()
-            .then(() => null)
-            .catch(this.errorHandler);
+            .map(res => null);
     }
 
     private errorHandler(error: any): Promise<any> {
         console.log('An error occurred', error);
         return Promise.reject(error.message || error);
     }
+}
+
+export interface AccountsWithCount {
+    data: Account[],
+    count: number
 }

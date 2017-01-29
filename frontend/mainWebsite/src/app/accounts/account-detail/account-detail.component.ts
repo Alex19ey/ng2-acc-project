@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { AccountService } from "../accounts.service";
-import { Account } from "../account.model";
+import { Account } from "../shared/account.model";
 
 
 
@@ -42,7 +42,7 @@ export class AccountDetailComponent implements OnInit {
             .switchMap((params: Params) => {
                 this.accountId = +params['id'];
                 return this.accountService.getById(this.accountId);
-            })
+            })  // TODO: add error handler
             .subscribe(account => this.account = account);
     }
 }

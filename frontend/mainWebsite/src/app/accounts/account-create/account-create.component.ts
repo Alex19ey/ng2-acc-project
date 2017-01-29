@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { AccountService } from "../accounts.service";
-import { Account } from "../account.model";
+import { Account } from "../shared/account.model";
 
 
 
