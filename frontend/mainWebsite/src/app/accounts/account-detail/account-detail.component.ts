@@ -12,10 +12,10 @@ import { Account } from "../shared/account.model";
 })
 export class AccountDetailComponent implements OnInit {
     /**
-     * State
+     * Fields
      */
-    public account: Account;
-    public accountId: number;
+    account: Account;
+    accountId: number;
 
     constructor(
         private accountService: AccountService,
@@ -26,23 +26,26 @@ export class AccountDetailComponent implements OnInit {
     /**
      * Handlers
      */
-    public onSubmit(account: Account): void {
+    onSubmit(account: Account): void {
         this.accountService.update(this.accountId, account)
-            .then(res => {
-                this.router.navigate([`/accounts`]);
-            })
-            .catch(err => {console.log(err)});
+            .subscribe(
+                res => this.router.navigate([`/accounts`]),
+                err => console.log(err)
+            );
     }
 
     /**
      * Hooks
      */
-    public ngOnInit(): void {
+    ngOnInit(): void {
         this.route.params
             .switchMap((params: Params) => {
                 this.accountId = +params['id'];
                 return this.accountService.getById(this.accountId);
-            })  // TODO: add error handler
-            .subscribe(account => this.account = account);
+            })
+            .subscribe(
+                account => this.account = account,
+                err => console.log(err)
+            );
     }
 }

@@ -17,15 +17,14 @@ export class AccountCreateComponent {
         private router: Router
     ) {}
 
-
     /**
      * Handlers
      */
-    public onSubmit(account: Account) {
+    onSubmit(account: Account) {
         this.accountService.create(account)
-            .then(res => {
-                this.router.navigate([`/accounts`]);
-            })
-            .catch(err => {console.log(err);});
+            .subscribe(
+                res => this.router.navigate([`/accounts`]),
+                err => console.log(err)
+            );
     }
 }

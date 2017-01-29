@@ -1,8 +1,8 @@
-import { Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, Input, OnInit, EventEmitter, Output, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
-import { Account } from "../../shared/account.model";
+import { Account } from "../account.model";
 
 
 
@@ -11,27 +11,21 @@ import { Account } from "../../shared/account.model";
     templateUrl: 'account-form.component.html',
     styleUrls: ['account-form.component.scss']
 })
-export class AccountFormComponent implements OnInit {
+export class AccountFormComponent implements OnInit, OnDestroy {
     @Input()
     account: Account;
-
-    ngOnChanges(input) {
-        if (!this.accountForm) return;
-
-        this.accountForm.patchValue(input.account.currentValue);
-    }
 
     @Output()
     formSubmit = new EventEmitter();
 
     /**
-     * State
+     * Fields
      */
-    public accountForm: FormGroup;
-    public submitted: boolean;
-    public formType: string;
+    accountForm: FormGroup;
+    submitted: boolean;
+    formType: string;
 
-    public formErrors = {
+    formErrors = {
         accountName: '',
         address: '',
         phone: '',
@@ -40,13 +34,14 @@ export class AccountFormComponent implements OnInit {
         info: '',
         contactName: ''
     };
+    private alive: boolean = true;
     private commonErrors = {
         'required':  'field is required.',
         'minlength': 'field is too short.',
         'maxlength': 'field is too long.',
         'pattern': 'number is not correct.'
     };
-    public validationMessages = {
+    validationMessages = {
         accountName: this.commonErrors,
         address: this.commonErrors,
         phone: this.commonErrors,
@@ -56,28 +51,25 @@ export class AccountFormComponent implements OnInit {
         contactName: this.commonErrors
     };
 
+
     constructor(
         private router: Router,
         private fb: FormBuilder
-    ) {
-        this.formType = this.router.url.includes('/create') ? 'create' : 'update';
-    }
+    ) {}
 
 
     /**
      * Handlers
      */
-    public onSubmit() {
+    onSubmit(): void {
         this.submitted = true;
 
-        if (!this.accountForm.valid) {
-            return this.onValueChanged();
-        }
+        if (!this.accountForm.valid) return this.onValueChanged();
 
         this.formSubmit.emit(this.accountForm.value);
     }
 
-    onValueChanged(data?: any) {
+    onValueChanged(data?: any): void {
         if (!this.accountForm) return;
         const form = this.accountForm;
 
@@ -95,12 +87,11 @@ export class AccountFormComponent implements OnInit {
         }
     }
 
-
-
     /**
      * Hooks
      */
-    public ngOnInit(): void {
+    ngOnInit(): void {
+        this.formType = this.router.url.includes('/create') ? 'create' : 'update';
         const account: Account = this.account || new Account(0,'','','','','','','');
 
         this.accountForm = this.fb.group({
@@ -114,8 +105,21 @@ export class AccountFormComponent implements OnInit {
         });
 
         this.accountForm.valueChanges
-            .subscribe(data => this.onValueChanged(data));
+            .takeWhile(() => this.alive)
+            .subscribe(
+                data => this.onValueChanged(data),
+                err => console.log(err)
+            );
 
         this.onValueChanged();
+    }
+
+    ngOnDestroy(): void {
+        this.alive = false;
+    }
+
+    ngOnChanges(input): void {
+        if (!this.accountForm) return;
+        this.accountForm.patchValue(input.account.currentValue);
     }
 }

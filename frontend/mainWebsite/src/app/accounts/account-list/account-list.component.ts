@@ -56,7 +56,10 @@ export class AccountListComponent implements OnInit, OnDestroy {
         if (data.column === 'view') return this.router.navigate([`/accounts`, data.row.id]);
         if (data.column === 'remove') {
             this.accountService.remove(data.row.id)
-                .subscribe(res => this.updateTable$.next(), err => console.log(err));
+                .subscribe(
+                    res => this.updateTable$.next(),
+                    err => console.log(err)
+                );
         }
     }
 
@@ -87,10 +90,13 @@ export class AccountListComponent implements OnInit, OnDestroy {
             .debounceTime(300)
             .distinctUntilChanged()
             .takeWhile(() => this.alive)
-            .subscribe(name => {
-                this.tableConfig.filtering.filterString = name;
-                this.updateTable$.next();
-            }, err => console.log(err));
+            .subscribe(
+                name => {
+                    this.tableConfig.filtering.filterString = name;
+                    this.updateTable$.next();
+                },
+                err => console.log(err)
+            );
 
         this.updateTable$.next();
     }

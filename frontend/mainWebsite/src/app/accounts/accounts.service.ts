@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, URLSearchParams, Response } from '@angular/http';
+import { Http, Headers, URLSearchParams } from '@angular/http';
 
 import { Account } from './shared/account.model';
-import {Observable} from "rxjs";
+import { Observable } from "rxjs";
 
 
 
@@ -12,15 +12,15 @@ export class AccountService {
     private accountsUrl = 'api/v1/accounts';
     private headers = new Headers({'Content-Type': 'application/json'});
 
-    constructor(private http: Http) {}
+    constructor(
+        private http: Http
+    ) {}
 
-    getById(id: number): Promise<Account> {
+    getById(id: number): Observable<Account> {
         const url = `${this.accountsUrl}/${id}`;
         return this.http
             .get(url)
-            .toPromise()
-            .then(response => response.json() as Account)
-            .catch(this.errorHandler);
+            .map(res => res.json() as Account);
     }
 
     getAll(params: URLSearchParams): Observable<AccountsWithCount> {
@@ -34,21 +34,17 @@ export class AccountService {
             });
     }
 
-    create(account: Account): Promise<Account> {
+    create(account: Account): Observable<Account> {
         return this.http
             .post(this.accountsUrl, JSON.stringify(account), {headers: this.headers})
-            .toPromise()
-            .then(res => res.json())
-            .catch(this.errorHandler);
+            .map(res => res.json() as Account);
     }
 
-    update(id: number, account: Account): Promise<Account> {
+    update(id: number, account: Account): Observable<Account> {
         const url = `${this.accountsUrl}/${id}`;
         return this.http
             .patch(url, JSON.stringify(account), {headers: this.headers})
-            .toPromise()
-            .then((res) => res.json())
-            .catch(this.errorHandler);
+            .map(res => res.json() as Account);
     }
 
     remove(id: number): Observable<null> {
@@ -56,11 +52,6 @@ export class AccountService {
         return this.http
             .delete(url, {headers: this.headers})
             .map(res => null);
-    }
-
-    private errorHandler(error: any): Promise<any> {
-        console.log('An error occurred', error);
-        return Promise.reject(error.message || error);
     }
 }
 
