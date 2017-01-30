@@ -23,6 +23,7 @@ div.container-fluid {
   th {
     cursor: pointer;
     text-align: center;
+    user-select: none;
   }
 
   td {
