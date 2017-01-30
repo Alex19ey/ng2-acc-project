@@ -2,12 +2,34 @@ div.container-fluid {
   padding-top: 40px;
 }
 
-ng-table {
+.table {
   margin-top: 20px;
-}
-
-.my-table {
   font-size: 0.9rem;
+  table-layout: fixed;
+  min-width: 700px;
+
+  .sortAsc::after {
+    font-family: 'Glyphicons Halflings';
+    content:"\e253";
+  }
+
+  .sortDesc::after {
+    font-family: 'Glyphicons Halflings';
+    content:"\e252";
+  }
+
+  th {
+    cursor: pointer;
+  }
+
+  td {
+    overflow-x: auto;
+    white-space: nowrap;
+
+    .btn {
+      padding: 5px 10px;
+    }
+  }
 
   @media all and (max-width: 767px) {
     font-size: 0.8rem;

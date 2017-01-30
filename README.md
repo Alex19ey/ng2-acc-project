@@ -10,4 +10,4 @@ Go to http://localhost:3262/
 ### How to configure
 If you need another port or domain name you can set it in config/server.js
 
-### Update 29.01.17
+### Update 30.01.17

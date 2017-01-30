@@ -7,13 +7,26 @@
 
     <button class="btn bg-primary" [routerLink]="['/accounts/create']">Create</button>
 
-    <ng-table class="col-xs-12 my-table"
-              [config]="tableConfig"
-              (tableChanged)="onChangeTable()"
-              (cellClicked)="onCellClick($event)"
-              [rows]="rows"
-              [columns]="columns">
-    </ng-table>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th *ngFor="let column of columns"
+                [class.sortAsc]="column.sort === 'asc'"
+                [class.sortDesc]="column.sort === 'desc'"
+                (click)="sortBy(column)"> {{column.title}}
+            </th>
+            <th width="80px">View</th>
+            <th width="85px">Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let row of rows">
+            <td *ngFor="let column of columns">{{row[column.name]}}</td>
+            <td><button class="btn btn-info" [routerLink]="['/accounts', row.id]">View</button></td>
+            <td><button class="btn btn-danger" (click)="onDelete(row.id)">Delete</button></td>
+        </tr>
+        </tbody>
+    </table>
 
     <div *ngIf="!rows.length" class="col-xs-12 text-center">No results</div>
 

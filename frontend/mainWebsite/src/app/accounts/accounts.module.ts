@@ -3,8 +3,6 @@ import { CommonModule, Location }   from '@angular/common';
 import { FormsModule, ReactiveFormsModule }   from '@angular/forms';
 import { PaginationModule } from 'ng2-bootstrap/pagination';
 
-import { Ng2TableModule } from 'ng2-table/ng2-table';
-
 import { AccountsRoutingModule } from './accounts-routing.module';
 
 import { AccountsComponent } from './accounts.component';
@@ -21,7 +19,6 @@ import { AccountService } from './accounts.service';
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
-        Ng2TableModule,
         PaginationModule.forRoot(),
         AccountsRoutingModule
     ],

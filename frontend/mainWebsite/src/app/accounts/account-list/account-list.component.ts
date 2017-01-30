@@ -5,7 +5,6 @@ import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 
 import { AccountService, AccountsWithCount } from "../accounts.service";
-import { Account } from "../shared/account.model";
 import { CustomPaginationConfig } from "../../shared/pagination";
 
 
@@ -26,16 +25,10 @@ export class AccountListComponent implements OnInit, OnDestroy {
         {title: 'Fax', name: 'fax'},
         {title: 'City', name: 'city'},
         {title: 'Info', name: 'info'},
-        {title: 'Contact name', name: 'contactName'},
-        {title: 'View', name: 'view', sort: false},
-        {title: 'Remove', name: 'remove', sort: false}
+        {title: 'Contact name', name: 'contactName'}
     ];
-    tableConfig: any = {
-        paging: true,
-        sorting: { columns: this.columns },
-        filtering: { filterString: ''},
-        className: ['table-striped', 'table-hover']
-    };
+    sortedColumn: any = this.columns[0];
+    filterString: string;
     filterName$: Subject<string> = new Subject<string>();
     updateTable$: Subject<null> = new Subject<null>();
     pagination: CustomPaginationConfig;
@@ -48,21 +41,25 @@ export class AccountListComponent implements OnInit, OnDestroy {
     /**
      * Handlers
      */
-    onChangeTable(): void {
+    sortBy(column: any): void {
+        if (this.sortedColumn === column) {
+            let sort = this.sortedColumn.sort;
+            this.sortedColumn.sort = sort === 'asc' ? 'desc' : 'asc';
+        } else {
+            this.sortedColumn.sort = '';
+            column.sort = 'asc';
+            this.sortedColumn = column;
+        }
+
         this.updateTable$.next();
     }
 
-    onCellClick(data: any): void {
-        if (data.column === 'view') {
-            this.router.navigate([`/accounts`, data.row.id]);
-        }
-        else if (data.column === 'remove') {
-            this.accountService.remove(data.row.id)
-                .subscribe(
-                    () => {this.updateTable$.next()},
-                    err => console.log(err)
-                );
-        }
+    onDelete(id: number): void {
+        this.accountService.remove(id)
+            .subscribe(
+                () => this.updateTable$.next(),
+                err => console.log(err)
+            );
     }
 
     onChangePage(page: number): void {
@@ -86,7 +83,7 @@ export class AccountListComponent implements OnInit, OnDestroy {
             .subscribe(
                 res => {
                     this.pagination.totalItems = res.count;
-                    this.generateRows(res.data);
+                    this.rows = res.data;
                 },
                 err => console.log(err)
             );
@@ -97,7 +94,7 @@ export class AccountListComponent implements OnInit, OnDestroy {
             .takeWhile(() => this.alive)
             .subscribe(
                 name => {
-                    this.tableConfig.filtering.filterString = name;
+                    this.filterString = name;
                     this.updateTable$.next();
                 },
                 err => console.log(err)
@@ -115,25 +112,14 @@ export class AccountListComponent implements OnInit, OnDestroy {
      */
     private alive: boolean = true;
 
-    // this is sort of hack, ng2-table cant create btns in a row
-    private generateRows(accounts: Account[]): void {
-        let rows: any = accounts;
-        rows.filter((item, i, arr) => {
-            item.view = '<button class="btn btn-info">View</button>';
-            item.remove = '<button class="btn btn-danger">Delete</button>';
-        });
-
-        this.rows = rows;
-    }
-
     private getAllAccounts(): Observable<AccountsWithCount> {
         let params = new URLSearchParams();
-        let sortItem = this.tableConfig.sorting.columns.find(item => item.sort);
+        let sortItem = this.columns.find(item => item.sort);
         if (sortItem) {
             params.set('sort', sortItem.name);
             params.set('order', sortItem.sort);
         }
-        params.set('query', this.tableConfig.filtering.filterString);
+        params.set('query', this.filterString);
         params.set('limit', this.pagination.limit.toString());
         params.set('offset', this.pagination.countOffset().toString());
 
