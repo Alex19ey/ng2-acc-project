@@ -92,12 +92,13 @@
         <label for="info"
                class="col-sm-3 control-label">Info</label>
         <div class="col-sm-9">
-            <input type="text"
-                   id="info"
-                   placeholder="Info.."
-                   class="form-control"
-                   formControlName="info"
-                   required>
+            <textarea id="info"
+                      rows="8"
+                      placeholder="Info.."
+                      class="form-control"
+                      formControlName="info"
+                      required>
+            </textarea>
             <div *ngIf="formErrors.info"
                  class="alert alert-danger">{{ formErrors.info }}</div>
         </div>
