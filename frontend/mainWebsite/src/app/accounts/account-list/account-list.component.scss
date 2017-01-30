@@ -1,12 +1,14 @@
 div.container-fluid {
   padding-top: 40px;
+  min-width: 700px;
+
 }
 
 .table {
   margin-top: 20px;
   font-size: 0.9rem;
   table-layout: fixed;
-  min-width: 700px;
+  border-radius: 10px;
 
   .sortAsc::after {
     font-family: 'Glyphicons Halflings';
@@ -20,11 +22,13 @@ div.container-fluid {
 
   th {
     cursor: pointer;
+    text-align: center;
   }
 
   td {
-    overflow-x: auto;
+    overflow: hidden;
     white-space: nowrap;
+    text-overflow: ellipsis;
 
     .btn {
       padding: 5px 10px;

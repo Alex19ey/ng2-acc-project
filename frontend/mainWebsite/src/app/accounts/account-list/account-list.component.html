@@ -7,7 +7,7 @@
 
     <button class="btn bg-primary" [routerLink]="['/accounts/create']">Create</button>
 
-    <table class="table table-hover">
+    <table class="table table-hover table-striped">
         <thead>
         <tr>
             <th *ngFor="let column of columns"
@@ -22,8 +22,8 @@
         <tbody>
         <tr *ngFor="let row of rows">
             <td *ngFor="let column of columns">{{row[column.name]}}</td>
-            <td><button class="btn btn-info" [routerLink]="['/accounts', row.id]">View</button></td>
-            <td><button class="btn btn-danger" (click)="onDelete(row.id)">Delete</button></td>
+            <td><button class="btn btn-info center-block" [routerLink]="['/accounts', row.id]">View</button></td>
+            <td><button class="btn btn-danger center-block" (click)="onDelete(row.id)">Delete</button></td>
         </tr>
         </tbody>
     </table>
