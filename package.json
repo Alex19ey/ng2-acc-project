@@ -8,7 +8,7 @@
     "build:prod": "cd ./frontend/mainWebsite && npm run prod:aot",
     "dev:w": "cd ./frontend/mainWebsite && npm run dev:w",
     "outdated": "npm outdated -l",
-    "server:prod": "NODE_ENV=production node app.js",
+    "server:prod": "set NODE_ENV=production&&node app.js",
     "server:dev": "node app.js"
   },
   "dependencies": {
