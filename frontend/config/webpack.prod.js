@@ -33,8 +33,9 @@ module.exports = function (options) {
 
             // The filename of non-entry chunks as relative path
             // inside the output.path directory.
-            chunkFilename: '[id].[chunkhash].chunk.js'
+            chunkFilename: '[id].[chunkhash].chunk.js',
 
+            publicPath: '/static-files/'
         },
 
         module: {

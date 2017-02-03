@@ -2,7 +2,7 @@
 
 let path = require('path');
 let renderStaticFile = require('./renderStaticFile');
-const websiteRoot = path.normalize(__dirname + './../../../frontend/mainWebsite/');
+const websiteRoot = path.normalize(__dirname + './../../../frontend/');
 
 
 module.exports = {

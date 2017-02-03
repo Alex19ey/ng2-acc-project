@@ -4,9 +4,10 @@ node_modules
 npm_debug.log
 npm-debug.log
 bower_components
-/server/utils/sequelize.js
-/frontend/mainWebsite/dist/
-/frontend/mainWebsite/aot/
+/frontend/dist/
+/frontend/aot/
 /server/temp/
 /server/db/*
+/certs
+/config
 .npmrc

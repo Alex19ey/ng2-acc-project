@@ -1,12 +1,9 @@
-"use strict";
+'use strict';
 
 const webpackMerge = require('webpack-merge'); // used to merge webpack configs
 const commonConfig = require('./webpack.common.js'); // the settings that are common to prod and dev
 const helpers = require('./helpers');
 
-/**
- * Webpack Plugins
- */
 
 /**
  * Webpack Constants
@@ -40,7 +37,7 @@ module.exports = function (options) {
 
             // library: 'ac_[name]',
             // libraryTarget: 'var',
-            publicPath: "/"
+            publicPath: '/static-files/'
         },
 
         module: {
@@ -48,7 +45,7 @@ module.exports = function (options) {
                 {
                     test: /\.ts$/,
                     use: [
-                        { loader: 'awesome-typescript-loader?{configFileName: "tsconfig.json"}' },
+                        { loader: 'awesome-typescript-loader?{configFileName: \'tsconfig.json\'}' },
                         { loader: 'angular2-template-loader' }
                     ],
                     exclude: [/\.(spec|e2e)\.ts$/]
@@ -85,9 +82,9 @@ module.exports = function (options) {
             historyApiFallback: true,
             // inline: true,
             proxy: {
-                "**": {
-                    target: "http://46.172.85.30:3262/",
-                    // pathRewrite: {"^/api" : ""}
+                '**': {
+                    target: 'http://46.172.85.30:3262/',
+                    // pathRewrite: {'^/api' : '}
                 }
             },
             watchOptions: {

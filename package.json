@@ -1,15 +1,15 @@
 {
   "name": "Angular2TestApp",
   "version": "0.0.1",
-  "main": "app.js",
+  "main": "server/app.js",
   "scripts": {
     "start": "npm run server:dev",
-    "install:all": "npm i && cd ./frontend/mainWebsite && npm i",
-    "build:prod": "cd ./frontend/mainWebsite && npm run prod:aot",
-    "dev:w": "cd ./frontend/mainWebsite && npm run dev:w",
+    "install:all": "npm i && cd ./frontend && npm i",
+    "build:prod": "cd ./frontend && npm run prod:aot",
+    "dev:w": "cd ./frontend && npm run dev:w",
     "outdated": "npm outdated -l",
-    "server:prod": "cross-env NODE_ENV=production node app.js",
-    "server:dev": "node app.js"
+    "server:prod": "cross-env NODE_ENV=production node server/app.js",
+    "server:dev": "node server/app.js"
   },
   "dependencies": {
     "async": "~2.1.4",

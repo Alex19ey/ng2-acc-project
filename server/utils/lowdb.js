@@ -6,8 +6,8 @@ const fileAsync = require('lowdb/lib/file-async');
 
 
 
-const dbFolder = path.normalize(__dirname + './../db');
-const dbFileLocation = path.normalize(dbFolder + '/db.json');
+const dbFolder = path.join(__dirname, './../db');
+const dbFileLocation = path.join(dbFolder, './db.json');
 
 // check for db.json file
 if (!fs.existsSync(dbFolder)) fs.mkdirSync(dbFolder);
