@@ -18,7 +18,7 @@ router.route('/v1/accounts/:id')
     .delete(accountsController.remove.mdl);
 
 
-router.get('/*', common.send404.mdl);
+router.use('/*', common.send404.mdl);
 
 router.use(common.errorApiHandler.mdl);
 
