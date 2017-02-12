@@ -1,10 +1,9 @@
 "use strict";
 
-let path = require('path');
-let renderStaticFile = require('./renderStaticFile');
-const websiteRoot = path.normalize(__dirname + './../../../frontend/');
+const path = require('path');
+const renderStaticFile = require('./renderStaticFile');
 
 
 module.exports = {
-    index: renderStaticFile(websiteRoot + 'dist/index.html')
+    index: renderStaticFile('dist/index.html')
 };

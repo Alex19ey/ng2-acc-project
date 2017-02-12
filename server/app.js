@@ -1,17 +1,15 @@
 "use strict";
 
-let express = require('express');
-let bodyParser = require('body-parser');
-let compression = require('compression');
-let cors = require('cors');
-let path = require('path');
+const express = require('express');
+const bodyParser = require('body-parser');
+const compression = require('compression');
+const cors = require('cors');
+const path = require('path');
 
-let config = require('../config').server;
-let router = require('./routes');
-let createServer = require('./utils/createServer');
-
-let app;
-exports.app = app = express();
+const app = exports.app = express();
+const config = require('../config').server;
+const router = require('./routes');
+const createServer = require('./utils/createServer');
 
 
 
@@ -19,14 +17,14 @@ app.set('view engine', 'ejs');
 app.set('views', __dirname + '/view');
 app.disable('x-powered-by');
 
-// app.use(cors());
-app.use(compression());
+if (config.trustProxy.isEnabled) app.set('trust proxy', config.trustProxy.adresses);
+if (config.compression) app.use(compression());
 
-if (config.serveStatic.active) { // serve static files by node
+if (config.serveStatic.isEnabled) { // serve static files by node
     app.use(config.serveStatic.urlPath, express.static(path.resolve(__dirname, '../frontend/dist'), {
         index: false,
         fallthrough: false,
-        maxAge: '30d'
+        maxAge: '90d'
     }));
 }
 

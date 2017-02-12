@@ -1,32 +1,34 @@
 {
-  "name": "Angular2TestApp",
+  "name": "angular-2-test-app",
   "version": "0.0.1",
   "main": "server/app.js",
   "scripts": {
-    "start": "npm run server:dev",
-    "install:all": "npm i && cd ./frontend && npm i",
-    "build:prod": "cd ./frontend && npm run prod:aot",
-    "dev:w": "cd ./frontend && npm run dev:w",
-    "outdated": "npm outdated -l",
+    "start": "npm-run-all -s install:all front:prod server:prod",
+    "start:dev": "npm-run-all -p front:dev:w server:dev",
+    "install:all": "npm i && cd ./frontend && npm i && cd ..",
+    "front:prod": "cd ./frontend && npm run prod:aot && cd ..",
+    "front:dev:w": "cd ./frontend && npm run dev:w",
     "server:prod": "cross-env NODE_ENV=production node server/app.js",
-    "server:dev": "node server/app.js"
+    "server:dev": "node server/app.js",
+    "outdated:all": "npm outdated -l && cd ./frontend && npm outdated -l && cd .."
   },
   "dependencies": {
-    "async": "~2.1.4",
-    "body-parser": "~1.16.0",
-    "compression": "~1.6.2",
-    "concurrently": "~3.1.0",
-    "connect-multiparty": "~2.0.0",
-    "cors": "~2.8.1",
-    "cross-env": "~3.1.4",
-    "ejs": "~2.5.5",
-    "express": "~4.14.0",
-    "lodash": "~4.17.4",
-    "lowdb": "~0.14.0",
-    "request": "~2.79.0",
-    "revalidator": "~0.3.1"
+    "async": "2.1.4",
+    "body-parser": "1.16.1",
+    "compression": "1.6.2",
+    "connect-multiparty": "2.0.0",
+    "cors": "2.8.1",
+    "ejs": "2.5.5",
+    "express": "4.14.1",
+    "lodash": "4.17.4",
+    "lowdb": "0.14.0",
+    "request": "2.79.0",
+    "revalidator": "0.3.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "npm-run-all": "4.0.0",
+    "cross-env": "3.1.4"
+  },
   "engines": {
     "node": ">= 6.0.0",
     "npm": ">= 3"
