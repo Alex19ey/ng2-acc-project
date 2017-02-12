@@ -114,7 +114,10 @@ module.exports = function (options) {
             new HtmlWebpackPlugin({
                 template: `./${options.src}/index.html`,
                 chunksSortMode: 'dependency',
-                inject: 'head'
+                inject: 'head',
+                minify: {
+                    minifyCSS: true
+                }
             }),
 
             // Description: Enhances html-webpack-plugin functionality
