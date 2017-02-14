@@ -1,13 +1,11 @@
 {
   "name": "angular2-app",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Test App",
   "scripts": {
-    "dev:w": "npm run clean && webpack",
-    "prod": "npm run clean && cross-env NODE_ENV=production webpack",
+    "dev:w": "npm run clean && webpack --watch",
     "prod:aot": "npm run clean && cross-env NODE_ENV=production webpack",
-    "dev:server": "npm run clean && webpack-dev-server --config webpack.config.js --progress --profile",
-    "clean": "rimraf --dist"
+    "clean": "rimraf -- dist"
   },
   "keywords": [],
   "author": "",
@@ -62,7 +60,7 @@
     "style-loader": "0.13.1",
     "typescript": "2.1.5",
     "url-loader": "0.5.7",
-    "webpack": "2.2.0",
+    "webpack": "2.2.1",
     "webpack-dev-server": "2.2.0",
     "webpack-md5-hash": "0.0.5",
     "webpack-merge": "2.6.1",

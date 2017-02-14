@@ -74,13 +74,13 @@ module.exports = function (options) {
             new WebpackMd5Hash(),
 
             new UglifyJsPlugin({
-                beautify: false, //prod
+                beautify: false,
                 output: {
                     comments: false
-                }, //prod
+                },
                 mangle: {
                     screw_ie8: true
-                }, //prod
+                },
                 compress: {
                     screw_ie8: true,
                     warnings: false,
@@ -92,7 +92,7 @@ module.exports = function (options) {
                     evaluate: true,
                     if_return: true,
                     join_vars: true,
-                    negate_iife: false // we need this for lazy v8
+                    negate_iife: false
                 },
             }),
 

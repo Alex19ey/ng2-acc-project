@@ -3,11 +3,11 @@
   "version": "0.0.1",
   "main": "server/app.js",
   "scripts": {
-    "start": "npm-run-all -s install:all front:prod server:prod",
-    "start:dev": "npm-run-all -p front:dev:w server:dev",
+    "start": "npm run install:all && npm-run-all -s build:prod server:prod",
+    "start:dev": "npm-run-all -p build:dev:w server:dev",
     "install:all": "npm i && cd ./frontend && npm i && cd ..",
-    "front:prod": "cd ./frontend && npm run prod:aot && cd ..",
-    "front:dev:w": "cd ./frontend && npm run dev:w && cd ..",
+    "build:prod": "cd ./frontend && npm run prod:aot",
+    "build:dev:w": "cd ./frontend && npm run dev:w && cd ..",
     "server:prod": "cross-env NODE_ENV=production node server/app.js",
     "server:dev": "node server/app.js",
     "outdated:all": "npm outdated -l && cd ./frontend && npm outdated -l && cd .."

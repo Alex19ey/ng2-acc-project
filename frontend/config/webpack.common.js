@@ -14,6 +14,7 @@ const CheckerPlugin = require('awesome-typescript-loader').CheckerPlugin;
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const WebpackNotifierPlugin = require('webpack-notifier');
+const NormalModuleReplacementPlugin = require('webpack/lib/NormalModuleReplacementPlugin');
 
 
 module.exports = function (options) {
@@ -21,7 +22,7 @@ module.exports = function (options) {
 
         // Cache generated modules and chunks to improve performance for multiple incremental builds.
         // This is enabled by default in watch mode.
-        // cache: false,
+        cache: true,
 
         entry: {
             polyfills: `./${options.src}/polyfills.ts`,
@@ -32,8 +33,7 @@ module.exports = function (options) {
             extensions: ['.ts', '.js', '.json'],
 
             // An array of directory names to be resolved to the current directory
-            modules: [options.srcAbs, helpers.rootJoin('node_modules')],
-
+            modules: [options.srcAbs, helpers.rootJoin('node_modules')]
         },
 
         module: {
@@ -58,8 +58,7 @@ module.exports = function (options) {
                 {
                     test: /\.(jpg|png|gif)$/,
                     use: 'file-loader'
-                },
-
+                }
             ],
         },
 
@@ -76,36 +75,31 @@ module.exports = function (options) {
 
             new CheckerPlugin(),
 
-            // Description: Shares common code between the pages.
-            // It identifies common modules and put them into a commons chunk.
-            new CommonsChunkPlugin({
-                name: 'polyfills',
-                chunks: ['polyfills']
-            }),
             // This enables tree shaking of the vendor modules
             new CommonsChunkPlugin({
                 name: 'vendor',
                 chunks: ['main'],
-                minChunks: module => /node_modules\//.test(module.resource)
+                minChunks: module => {
+                    if (!module || !module.resource) return false;
+                    return module.resource.includes('node_modules');
+                }
             }),
+
             // Specify the correct order the scripts will be injected in
             new CommonsChunkPlugin({
                 name: ['polyfills', 'vendor'].reverse()
             }),
 
             new ContextReplacementPlugin(
-              // The (\\|\/) piece accounts for path separators in *nix and Windows
-              /angular(\\|\/)core(\\|\/)src(\\|\/)linker/,
-              options.srcAbs, // location of your src
-              {
-                // our Angular Async Route paths relative to this root directory
-              }
+                // The (\\|\/) piece accounts for path separators in *nix and Windows
+                /angular(\\|\/)core(\\|\/)src(\\|\/)linker/,
+                options.srcAbs, // location of your src
+                {} // our Angular Async Route paths relative to this root directory
             ),
 
             // Description: Copy files and directories in webpack.
             new CopyWebpackPlugin([
-                {from: `${options.src}/assets`, to: `assets`},
-                // {from: `node_modules/bootstrap/dist/css/bootstrap.min.css`, to: `assets`}
+                {from: `${options.src}/assets`, to: `assets`}
             ]),
 
              // Description: Simplifies creation of HTML files to serve your webpack bundles.

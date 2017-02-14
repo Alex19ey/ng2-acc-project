@@ -5,18 +5,11 @@ const commonConfig = require('./webpack.common.js'); // the settings that are co
 const helpers = require('./helpers');
 
 
-/**
- * Webpack Constants
- */
-const HOST = process.env.HOST || '0.0.0.0';
-const PORT = process.env.PORT || 3000;
-
-
 module.exports = function (options) {
     return webpackMerge(commonConfig(options), {
 
         devtool: 'cheap-module-source-map',
-        watch: true,
+        // watch: true,
 
         output: {
 
@@ -72,28 +65,7 @@ module.exports = function (options) {
             ]
         },
 
-        plugins: [
-            // new ExtractTextPlugin('[name].css')
-        ],
-
-        devServer: {
-            contentBase: options.srcAbs,
-            host: HOST,
-            port: PORT,
-            historyApiFallback: true,
-            // inline: true,
-            proxy: {
-                '**': {
-                    target: 'http://46.172.85.30:3262/',
-                    // pathRewrite: {'^/api' : '}
-                }
-            },
-            watchOptions: {
-                aggregateTimeout: 100,
-                poll: 1000,
-                ignored: /node_modules/
-            }
-        },
+        plugins: [],
 
         watchOptions: {
             aggregateTimeout: 100,
