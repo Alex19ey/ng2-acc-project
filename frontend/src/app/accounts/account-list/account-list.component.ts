@@ -1,14 +1,4 @@
-import {
-    Component,
-    OnInit,
-    OnDestroy,
-    trigger,
-    state,
-    style,
-    transition,
-    animate,
-    keyframes
-} from '@angular/core';
+import { Component, OnInit, OnDestroy} from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
@@ -16,23 +6,14 @@ import { Subject } from 'rxjs/Subject';
 
 import { AccountService, AccountsWithCount } from "../accounts.service";
 import { CustomPaginationConfig } from "../../shared/pagination";
-
+import { flyIn } from '../shared/animations';
 
 
 @Component({
     templateUrl: 'account-list.component.html',
     styleUrls: ['account-list.component.scss'],
     animations: [
-        trigger('flyIn', [
-            state('in', style({transform: 'translateX(0)'})),
-            transition('void => *', [
-                animate(300, keyframes([
-                    style({opacity: 0, transform: 'translateX(-100%)', offset: 0}),
-                    style({opacity: 1, transform: 'translateX(15px)',  offset: 0.3}),
-                    style({opacity: 1, transform: 'translateX(0)',     offset: 1.0})
-                ]))
-            ])
-        ])
+        flyIn
     ]
 })
 export class AccountListComponent implements OnInit, OnDestroy {
