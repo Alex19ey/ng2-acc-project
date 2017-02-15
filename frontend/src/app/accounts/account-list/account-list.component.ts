@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 
 import { AccountService, AccountsWithCount } from "../accounts.service";
-import { CustomPaginationConfig } from "../../shared/pagination";
+import { CustomPaginationConfig } from "../../shared/pagination.model";
 import { flyIn } from '../shared/animations';
 
 

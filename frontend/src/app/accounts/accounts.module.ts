@@ -29,6 +29,7 @@ import { AccountService } from './accounts.service';
         AccountDetailComponent,
         AccountCreateComponent
     ],
+    exports: [ AccountsComponent ],
     providers: [
         Location,
         AccountService

@@ -1,6 +1,5 @@
 import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
-import { FormsModule }   from '@angular/forms';
 import { HttpModule }    from '@angular/http';
 
 import 'rxjs/add/operator/takeWhile';
@@ -22,7 +21,6 @@ import "../styles/styles.scss";
 @NgModule({
     imports: [
         BrowserModule,
-        FormsModule,
         HttpModule,
         AccountsModule,
         AppRoutingModule
