@@ -26,10 +26,10 @@ function createServer(app, config) {
 }
 
 function tlsIsActive(tlsConfig) {
-    let isActive = tlsConfig.active;
+    let isEnabled = tlsConfig.isEnabled;
     let hasRequiredOptions = tlsConfig.options && tlsConfig.options.key && tlsConfig.options.cert;
 
-    if (isActive && !hasRequiredOptions) throw new Error('required TLS options not provided');
+    if (isEnabled && !hasRequiredOptions) throw new Error('required TLS options not provided');
 
-    return isActive;
+    return isEnabled;
 }

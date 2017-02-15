@@ -17,7 +17,7 @@ app.set('view engine', 'ejs');
 app.set('views', __dirname + '/view');
 app.disable('x-powered-by');
 
-if (config.trustProxy.isEnabled) app.set('trust proxy', config.trustProxy.adresses);
+if (config.trustProxy.isEnabled) app.set('trust proxy', config.trustProxy.addresses);
 if (config.compression) app.use(compression());
 
 if (config.serveStatic.isEnabled) { // serve static files by node
