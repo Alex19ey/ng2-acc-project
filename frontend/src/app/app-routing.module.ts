@@ -1,7 +1,7 @@
 import { NgModule }             from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { PageNotFoundComponent } from './not-found.component';
+import { PageNotFoundComponent } from './core/not-found.component';
 
 
 

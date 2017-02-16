@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
-import { CommonModule, Location }   from '@angular/common';
-import { FormsModule, ReactiveFormsModule }   from '@angular/forms';
-import { PaginationModule } from 'ng2-bootstrap/pagination';
+import { Location }   from '@angular/common';
+import { ReactiveFormsModule }   from '@angular/forms';
 
+import { SharedModule } from '../shared/shared.module';
 import { AccountsRoutingModule } from './accounts-routing.module';
 
 import { AccountsComponent } from './accounts.component';
@@ -16,10 +16,8 @@ import { AccountService } from './accounts.service';
 
 @NgModule({
     imports: [
-        CommonModule,
-        FormsModule,
+        SharedModule,
         ReactiveFormsModule,
-        PaginationModule.forRoot(),
         AccountsRoutingModule
     ],
     declarations: [
